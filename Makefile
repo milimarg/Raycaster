@@ -1,8 +1,11 @@
 SRC	=	src/main.c \
-		src/raycaster.c \
+		src/player/create.c \
+		src/player/move.c \
 		src/2d_map.c \
-		src/player.c \
-		src/move_player.c
+		src/raycaster.c \
+		src/cast_rays.c \
+		src/math_tools.c \
+		src/3d_map.c
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -15,7 +18,7 @@ CSFML_FLAGS	=	-lcsfml-graphics -lcsfml-system -lcsfml-window
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	gcc $(OBJ) -o $(NAME) $(CFLAGS) $(CSFML_FLAGS)
+	gcc $(OBJ) -o $(NAME) $(CFLAGS) $(CSFML_FLAGS) -lm
 
 clean:
 	rm -f $(OBJ)
