@@ -1,30 +1,21 @@
+#include <stdio.h>
+#include <math.h>
 #include "../../include/structs.h"
 #include "../../include/prototypes.h"
-#include <math.h>
 
 static void move(player_t *player, const sfVector2f *delta)
 {
-    sfRectangleShape_move(player->object, *delta);
-    sfRectangleShape_move(player->stick_object, *delta);
-    player->pos.x += delta->x;
-    player->pos.y += delta->y;
-}
-
-static float fix_angle(float angle)
-{
-    if (angle < 0)
-        angle += 2 * M_PI;
-    if (angle > (2 * M_PI))
-        angle -= 2 * M_PI;
-    return (angle);
+    player->pos.x += delta->x * 5;
+    player->pos.y += delta->y * 5;
+    sfRectangleShape_setPosition(player->object, player->pos);
+    sfRectangleShape_setPosition(player->stick_object, player->pos);
 }
 
 static void turn(player_t *player, float angle)
 {
-    sfVector2f delta = {cos(player->angle) * 5, sin(player->angle) * 5};
-
     player->angle = fix_angle(player->angle + angle);
-    player->delta = delta;
+    player->delta.x = cos(deg_to_rad(player->angle));
+    player->delta.y = sin(deg_to_rad(player->angle));
     sfRectangleShape_setRotation(player->stick_object, player->angle * (M_PI * 20));
 }
 
@@ -32,9 +23,11 @@ void move_2d_player(raycaster_t *raycaster)
 {
     const sfKeyCode keys[] = {sfKeyUp, sfKeyDown, -1};
     const sfKeyCode turn_keys[] = {sfKeyLeft, sfKeyRight, -1};
-    float angle = 0.1;
+    float angle = 5;
     sfVector2f move_delta = {0};
 
+    raycaster->player->delta.x = cos(deg_to_rad(raycaster->player->angle));
+    raycaster->player->delta.y = sin(deg_to_rad(raycaster->player->angle));
     for (int i = 0; keys[i] != -1; i++) {
         move_delta = raycaster->player->delta;
         if (sfKeyboard_isKeyPressed(keys[i])) {

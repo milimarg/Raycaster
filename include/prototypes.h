@@ -24,5 +24,6 @@
 
     float deg_to_rad(float angle);
     float calc_distance(sfVector2f *player, sfVector2f *ray, float ray_angle);
+    float fix_angle(float angle);
 
 #endif /*PROTOTYPES_H_*/

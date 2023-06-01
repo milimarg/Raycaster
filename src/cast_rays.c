@@ -5,7 +5,6 @@
 ** cast_rays.c
 */
 
-#include <stdio.h>
 #include <math.h>
 #include "../include/structs.h"
 #include "../include/prototypes.h"
@@ -15,45 +14,43 @@
 
 static void get_vertical_ray_pos(sfVector2f *ray_pos, float ray_angle, raycaster_t *raycaster, sfVector2f *next)
 {
-    double tan_value = -tan(ray_angle);
+    float tan_value = tan(deg_to_rad(ray_angle));
 
-    if (ray_angle > P2 && ray_angle < P3) {
-        ray_pos->x = (((int)raycaster->player->pos.x >> raycaster->power_2) << raycaster->power_2) - 0.0001;
+    raycaster->tries = 0;
+    if (cos(deg_to_rad(ray_angle)) > 0.001) {
+        ray_pos->x = (((int)raycaster->player->pos.x >> raycaster->power_2.y) << raycaster->power_2.y) + raycaster->block_size.y; // 64
         ray_pos->y = (raycaster->player->pos.x - ray_pos->x) * tan_value + raycaster->player->pos.y;
-        next->x = -64;
+        next->x = raycaster->block_size.y; // 64
         next->y = -next->x * tan_value;
-    }
-    if (ray_angle < P2 || ray_angle > P3) {
-        ray_pos->x = (((int)raycaster->player->pos.x >> raycaster->power_2) << raycaster->power_2) + 64;
+    } else if (cos(deg_to_rad(ray_angle)) < -0.001) {
+        ray_pos->x = (((int)raycaster->player->pos.x >> raycaster->power_2.y) << raycaster->power_2.y) - 0.0001;
         ray_pos->y = (raycaster->player->pos.x - ray_pos->x) * tan_value + raycaster->player->pos.y;
-        next->x = 64;
+        next->x = -raycaster->block_size.y; // 64
         next->y = -next->x * tan_value;
-    }
-    if (ray_angle == 0 || ray_angle == M_PI) {
+    } else {
         *ray_pos = raycaster->player->pos;
-        raycaster->tries = raycaster->max_tries;
+        raycaster->tries = raycaster->max_tries.y;
     }
 }
 
 static void get_horizontal_ray_pos(sfVector2f *ray_pos, float ray_angle, raycaster_t *raycaster, sfVector2f *next)
 {
-    double tan_value = -1 / tan(ray_angle);
+    float tan_value = 1.0 / tan(deg_to_rad(ray_angle));
 
-    if (ray_angle > M_PI) {
-        ray_pos->y = (((int)raycaster->player->pos.y >> raycaster->power_2) << raycaster->power_2) - 0.0001;
+    raycaster->tries = 0;
+    if (sin(deg_to_rad(ray_angle)) > 0.001) {
+        ray_pos->y = (((int)raycaster->player->pos.y >> raycaster->power_2.x) << raycaster->power_2.x) - 0.0001;
         ray_pos->x = (raycaster->player->pos.y - ray_pos->y) * tan_value + raycaster->player->pos.x;
-        next->y = -64;
+        next->y = -raycaster->block_size.x; // 64
         next->x = -next->y * tan_value;
-    }
-    if (ray_angle < M_PI) {
-        ray_pos->y = (((int)raycaster->player->pos.y >> raycaster->power_2) << raycaster->power_2) + 64;
+    } else if (sin(deg_to_rad(ray_angle)) < -0.001) {
+        ray_pos->y = (((int)raycaster->player->pos.y >> raycaster->power_2.x) << raycaster->power_2.x) + raycaster->block_size.x; // 64
         ray_pos->x = (raycaster->player->pos.y - ray_pos->y) * tan_value + raycaster->player->pos.x;
-        next->y = 64;
+        next->y = raycaster->block_size.x; // 64
         next->x = -next->y * tan_value;
-    }
-    if (ray_angle == 0 || ray_angle == M_PI) {
+    } else {
         *ray_pos = raycaster->player->pos;
-        raycaster->tries = raycaster->max_tries;
+        raycaster->tries = raycaster->max_tries.x;
     }
 }
 
@@ -61,18 +58,17 @@ static float check_horizontal_line(raycaster_t *raycaster, sfVector2f *ray_pos, 
 {
     sfVector2f next = {0};
     sfVector2i m = {0};
-    float distance = 10000;
+    float distance = 1000000;
     int mp = 0;
 
-    raycaster->tries = 0;
     get_horizontal_ray_pos(ray_pos, ray_angle, raycaster, &next);
-    while (raycaster->tries < raycaster->max_tries) {
-        m.x = (int)(ray_pos->x) >> raycaster->power_2;
-        m.y = (int)(ray_pos->y) >> raycaster->power_2;
-        mp = m.y * MAP_WIDTH + m.x;
-        if (mp > 0 && mp < MAP_SURFACE && map[mp] == 1) {
+    while (raycaster->tries < raycaster->max_tries.x) {
+        m.x = (int)(ray_pos->x) >> raycaster->power_2.x;
+        m.y = (int)(ray_pos->y) >> raycaster->power_2.y;
+        mp = m.y * raycaster->map_size.x + m.x;
+        if (mp > 0 && mp < raycaster->map_surface && map[mp] == 1) {
             distance = calc_distance(&raycaster->player->pos, ray_pos, ray_angle);
-            raycaster->tries = raycaster->max_tries;
+            raycaster->tries = raycaster->max_tries.x;
         } else {
             ray_pos->x += next.x;
             ray_pos->y += next.y;
@@ -86,18 +82,17 @@ static float check_vertical_line(raycaster_t *raycaster, sfVector2f *ray_pos, fl
 {
     sfVector2f next = {0};
     sfVector2i m = {0};
-    float distance = 10000;
+    float distance = 1000000;
     int mp = 0;
 
-    raycaster->tries = 0;
     get_vertical_ray_pos(ray_pos, ray_angle, raycaster, &next);
-    while (raycaster->tries < raycaster->max_tries) {
-        m.x = (int)(ray_pos->x) >> raycaster->power_2;
-        m.y = (int)(ray_pos->y) >> raycaster->power_2;
-        mp = m.y * MAP_HEIGHT + m.x;
-        if (mp > 0 && mp < MAP_SURFACE && map[mp] == 1) {
+    while (raycaster->tries < raycaster->max_tries.y) {
+        m.x = (int)(ray_pos->x) >> raycaster->power_2.x;
+        m.y = (int)(ray_pos->y) >> raycaster->power_2.y;
+        mp = m.y * raycaster->map_size.y + m.x;
+        if (mp > 0 && mp < raycaster->map_surface && map[mp] == 1) {
             distance = calc_distance(&raycaster->player->pos, ray_pos, ray_angle);
-            raycaster->tries = raycaster->max_tries;
+            raycaster->tries = raycaster->max_tries.y;
         } else {
             ray_pos->x += next.x;
             ray_pos->y += next.y;
@@ -107,18 +102,10 @@ static float check_vertical_line(raycaster_t *raycaster, sfVector2f *ray_pos, fl
     return (distance);
 }
 
-static float map_value(float input, float input_start, float input_end, float output_start, float output_end)
-{
-    float output = output_start + ((output_end - output_start) / (input_end - input_start)) * (input - input_start);
-
-    return (output);
-}
-
 static void create_3d_wall(float distance, int i, raycaster_t *raycaster, sfColor *color)
 {
-    distance = fabs(distance);
     sfVertex vertex = {0};
-    float height = map_value(distance, 0, 400, (double)raycaster->mode.height, 0);
+    float height = (raycaster->map_surface * 540) / fabs(distance);
 
     vertex.color = *color;
     vertex.position.x = raycaster->wall_size.x * i;
@@ -165,7 +152,7 @@ void cast_rays(raycaster_t *raycaster)
         vertex.position = ray_pos;
         vertex.color = sfGreen;
         sfVertexArray_append(raycaster->rays_2d, vertex);
-        ray_angle += 0.01;
+        ray_angle += 0.125;
         shortest_distance = (h_distance < v_distance) ? h_distance : v_distance;
         color = (h_distance < v_distance) ? sfGreen : sfRed;
         create_3d_wall(shortest_distance, i, raycaster, &color);
