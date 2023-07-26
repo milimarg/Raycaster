@@ -2,12 +2,17 @@
 
 ## Compilation
 
-```c
+```shell
 make
 ```
 
 ## Usage
 
-```c
+```shell
 ./my_raycaster
 ```
+
+## Controls
+
+`Arrow Up/Down` => Move forward/backward \
+`Arrow Left/Right` => Turn left/right
