@@ -5,25 +5,24 @@ int main(void)
 {
     sfEvent event = {0};
     sfVideoMode mode = sfVideoMode_getDesktopMode();
-    raycaster_t *raycaster = create_raycaster(&mode, 720);
-    sfRenderWindow *window = sfRenderWindow_create(raycaster->mode, "Raycaster", sfDefaultStyle, NULL);
+    mode.width = 1920;
+    mode.height = 1080;
+    sfRenderWindow *window = sfRenderWindow_create(mode, "Raycaster", sfDefaultStyle, NULL);
+    raycaster_t *raycaster = create_raycaster(window);
     sfClock *clock = sfClock_create();
 
     sfRenderWindow_setFramerateLimit(window, 60);
-    raycaster->tries = 0;
-    raycaster->max_tries = raycaster->map_size;
+    //sfRenderWindow_setMouseCursorVisible(window, sfFalse);
     while (sfRenderWindow_isOpen(window)) {
-        raycaster->wall_size.x = (float)raycaster->mode.width / (float)raycaster->rays_nb;
-        raycaster->wall_size.y = (float)raycaster->mode.height;
         sfRenderWindow_clear(window, sfBlack);
         if (sfClock_getElapsedTime(clock).microseconds > (62 * 1000)) {
             sfClock_restart(clock);
-            move_2d_player(raycaster);
+            move_2d_player(raycaster, window);
             cast_rays(raycaster);
             change_resolution(raycaster);
         }
         while (sfRenderWindow_pollEvent(window, &event)) {
-            if (event.type == sfEvtClosed) {
+            if (event.type == sfEvtClosed || sfKeyboard_isKeyPressed(sfKeyEscape)) {
                 sfRenderWindow_close(window);
             }
         }

@@ -17,7 +17,7 @@ CFLAGS	=	-Wall -Wextra
 
 # add this in CSFML_FLAGS for mac "-L/opt/homebrew/Cellar/csfml/2.5.2_1/lib"
 
-CSFML_FLAGS	=	-lcsfml-graphics -lcsfml-system -lcsfml-window
+CSFML_FLAGS	=	-L/opt/homebrew/Cellar/csfml/2.5.2_1/lib -lcsfml-graphics -lcsfml-system -lcsfml-window
 
 all: $(NAME)
 

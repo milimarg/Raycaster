@@ -32,7 +32,7 @@ static const int map[256] = {
     } player_t;
 
     typedef struct raycaster_s {
-        sfVideoMode mode;
+        sfVector2u window_size;
         player_t *player;
         sfVector2f block_size;
         sfRectangleShape **blocks_2d;

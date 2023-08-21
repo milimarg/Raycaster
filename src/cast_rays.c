@@ -99,19 +99,19 @@ static void create_3d_wall(float distance, unsigned int i, raycaster_t *raycaste
 
     vertex.color = *color;
     vertex.position.x = raycaster->wall_size.x * (float)i;
-    vertex.position.y = ((float)raycaster->mode.height / 2.0f) - (height / 2.0f);
+    vertex.position.y = ((float)raycaster->window_size.y / 2.0f) - (height / 2.0f);
     sfVertexArray_append(raycaster->walls_3d, vertex);
     vertex.color = *color;
     vertex.position.x = (raycaster->wall_size.x * (float)i) + raycaster->wall_size.x;
-    vertex.position.y = ((float)raycaster->mode.height / 2.0f) - (height / 2.0f);
+    vertex.position.y = ((float)raycaster->window_size.y / 2.0f) - (height / 2.0f);
     sfVertexArray_append(raycaster->walls_3d, vertex);
     vertex.color = *color;
     vertex.position.x = (raycaster->wall_size.x * (float)i) + raycaster->wall_size.x;
-    vertex.position.y = ((float)raycaster->mode.height / 2.0f) + (height / 2.0f);
+    vertex.position.y = ((float)raycaster->window_size.y / 2.0f) + (height / 2.0f);
     sfVertexArray_append(raycaster->walls_3d, vertex);
     vertex.color = *color;
     vertex.position.x = (raycaster->wall_size.x * (float)i);
-    vertex.position.y = ((float)raycaster->mode.height / 2.0f) + (height / 2.0f);
+    vertex.position.y = ((float)raycaster->window_size.y / 2.0f) + (height / 2.0f);
     sfVertexArray_append(raycaster->walls_3d, vertex);
 }
 

@@ -3,13 +3,13 @@
 
 // CREATE //
 
-raycaster_t *create_raycaster(sfVideoMode *mode, unsigned int rays_number);
+raycaster_t *create_raycaster(sfRenderWindow *window);
 void create_2d_map(raycaster_t *raycaster);
 void create_player(raycaster_t *raycaster);
 
 // MOVE //
 
-void move_2d_player(raycaster_t *raycaster);
+void move_2d_player(raycaster_t *raycaster, sfRenderWindow *window);
 void controls_move(player_t *player, const sfVector2f *delta);
 void tank_controls_turn(player_t *player, float angle);
 
@@ -21,6 +21,7 @@ void display_3d_map(raycaster_t *raycaster, sfRenderWindow *window);
 // RAYS //
 
 void cast_rays(raycaster_t *raycaster);
+void update_3d_wall_size(raycaster_t *raycaster);
 void change_resolution(raycaster_t *raycaster);
 
 // MATH TOOLS //
