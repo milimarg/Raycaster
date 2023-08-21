@@ -16,6 +16,6 @@ make
 
 ## Controls
 
-`Arrow Up/Down` => Move forward/backward \
-`Arrow Left/Right` => Turn left/right \
-`Comma (,)/Period (.)` => Increase/Decrease graphics
+`Arrow Up/Down` => move forward/backward \
+`Arrow Left/Right` => turn left/right \
+`Comma (,)/Period (.)` => increase/decrease graphics quality
