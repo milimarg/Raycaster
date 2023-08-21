@@ -6,7 +6,8 @@ SRC	=	src/main.c \
 		src/raycaster.c \
 		src/cast_rays.c \
 		src/math_tools.c \
-		src/3d_map.c
+		src/3d_map.c \
+		src/resolution.c
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -14,7 +15,7 @@ NAME	=	raycaster
 
 CFLAGS	=	-Wall -Wextra
 
-CSFML_FLAGS	=	-lcsfml-graphics -lcsfml-system -lcsfml-window
+CSFML_FLAGS	=	-L/opt/homebrew/Cellar/csfml/2.5.2_1/lib -lcsfml-graphics -lcsfml-system -lcsfml-window
 
 all: $(NAME)
 

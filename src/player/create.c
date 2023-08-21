@@ -4,8 +4,8 @@
 
 static void init_player_object(player_t *player, sfVector2f *block_size)
 {
-    sfVector2f half_block_size = {block_size->x / 4.0, block_size->y / 4.0};
-    sfVector2f origin = {half_block_size.x / 4.0, half_block_size.y / 4.0};
+    sfVector2f half_block_size = {block_size->x / 4.0f, block_size->y / 4.0f};
+    sfVector2f origin = {half_block_size.x / 4.0f, half_block_size.y / 4.0f};
 
     player->object = sfRectangleShape_create();
     sfRectangleShape_setPosition(player->object, player->pos);
@@ -17,8 +17,8 @@ static void init_player_object(player_t *player, sfVector2f *block_size)
 
 static void init_player_stick_object(player_t *player, sfVector2f *block_size)
 {
-    sfVector2f stick_size = {block_size->x / 2.0, block_size->y / 16.0};
-    sfVector2f origin = {0, stick_size.y / 16.0};
+    sfVector2f stick_size = {block_size->x / 2.0f, block_size->y / 16.0f};
+    sfVector2f origin = {0, stick_size.y / 16.0f};
 
     player->stick_object = sfRectangleShape_create();
     sfRectangleShape_setPosition(player->stick_object, player->pos);
@@ -31,8 +31,9 @@ static void init_player_stick_object(player_t *player, sfVector2f *block_size)
 void create_player(raycaster_t *raycaster)
 {
     raycaster->player = malloc(sizeof(player_t));
-    raycaster->player->pos = (sfVector2f){100, 100};
+    raycaster->player->pos = (sfVector2f){50, 50};
     raycaster->player->angle = 0;
+    raycaster->ray_shift = 0.125f;
     raycaster->rays_2d = sfVertexArray_create();
     init_player_object(raycaster->player, &raycaster->block_size);
     init_player_stick_object(raycaster->player, &raycaster->block_size);

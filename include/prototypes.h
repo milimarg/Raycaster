@@ -3,7 +3,7 @@
 
 // CREATE //
 
-raycaster_t *create_raycaster(sfVideoMode *mode);
+raycaster_t *create_raycaster(sfVideoMode *mode, unsigned int rays_number);
 void create_2d_map(raycaster_t *raycaster);
 void create_player(raycaster_t *raycaster);
 
@@ -21,6 +21,7 @@ void display_3d_map(raycaster_t *raycaster, sfRenderWindow *window);
 // RAYS //
 
 void cast_rays(raycaster_t *raycaster);
+void change_resolution(raycaster_t *raycaster);
 
 // MATH TOOLS //
 

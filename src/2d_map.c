@@ -28,8 +28,7 @@ void create_2d_map(raycaster_t *raycaster)
 void display_2d_map(raycaster_t *raycaster, sfRenderWindow *window)
 {
     for (int i = 0; raycaster->blocks_2d[i] != NULL; i++) {
-        sfRenderWindow_drawRectangleShape(window, raycaster->blocks_2d[i],
-        NULL);
+        sfRenderWindow_drawRectangleShape(window, raycaster->blocks_2d[i], NULL);
     }
     sfRenderWindow_drawVertexArray(window, raycaster->rays_2d, NULL);
     sfRenderWindow_drawRectangleShape(window, raycaster->player->object, NULL);

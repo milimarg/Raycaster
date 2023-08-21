@@ -36,7 +36,7 @@ static const int map[256] = {
         player_t *player;
         sfVector2f block_size;
         sfRectangleShape **blocks_2d;
-        int rays_nb;
+        unsigned int rays_nb;
         sfVector2u power_2;
         unsigned int tries;
         sfVector2u max_tries;
@@ -44,7 +44,8 @@ static const int map[256] = {
         sfVertexArray *walls_3d;
         sfVector2f wall_size;
         sfVector2u map_size;
-        int map_surface;
+        unsigned int map_surface;
+        float ray_shift;
     } raycaster_t;
 
 #endif /*STRUCTS_H_*/
