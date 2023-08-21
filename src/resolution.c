@@ -13,6 +13,7 @@ static void update_resolution(int state_is_up, raycaster_t *raycaster)
         raycaster->rays_nb /= shift;
         raycaster->ray_shift *= (float)shift;
     }
+    update_3d_wall_size(raycaster);
 }
 
 void change_resolution(raycaster_t *raycaster)

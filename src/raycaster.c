@@ -43,8 +43,8 @@ raycaster_t *create_raycaster(sfRenderWindow *window)
 
     center.x = (int)((float)raycaster->window_size.x / 2.0f);
     center.y = (int)((float)raycaster->window_size.y / 2.0f);
-    printf("size => x = %d & y = %d\n", raycaster->window_size.x, raycaster->window_size.y);
-    printf("center => x = %d & y = %d\n", center.x, center.y);
+    //printf("size => x = %d & y = %d\n", raycaster->window_size.x, raycaster->window_size.y);
+    //printf("center => x = %d & y = %d\n", center.x, center.y);
     sfMouse_setPositionRenderWindow(center, window);
 
     return (raycaster);
