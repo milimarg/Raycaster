@@ -15,19 +15,6 @@ static void init_player_object(player_t *player, sfVector2f *block_size)
     sfRectangleShape_setOutlineThickness(player->object, 0);
 }
 
-static void init_player_stick_object(player_t *player, sfVector2f *block_size)
-{
-    sfVector2f stick_size = {block_size->x / 2.0f, block_size->y / 16.0f};
-    sfVector2f origin = {0, stick_size.y / 16.0f};
-
-    player->stick_object = sfRectangleShape_create();
-    sfRectangleShape_setPosition(player->stick_object, player->pos);
-    sfRectangleShape_setSize(player->stick_object, stick_size);
-    sfRectangleShape_setOrigin(player->stick_object, origin);
-    sfRectangleShape_setFillColor(player->stick_object, sfYellow);
-    sfRectangleShape_setOutlineThickness(player->object, 0);
-}
-
 void create_player(raycaster_t *raycaster)
 {
     raycaster->player = malloc(sizeof(player_t));
@@ -36,5 +23,4 @@ void create_player(raycaster_t *raycaster)
     raycaster->ray_shift = 0.125f;
     raycaster->rays_2d = sfVertexArray_create();
     init_player_object(raycaster->player, &raycaster->block_size);
-    init_player_stick_object(raycaster->player, &raycaster->block_size);
 }

@@ -1,5 +1,4 @@
 #include <math.h>
-#include <stdio.h>
 #include "../../include/structs.h"
 #include "../../include/prototypes.h"
 

@@ -7,13 +7,12 @@ static void update_resolution(int state_is_up, raycaster_t *raycaster)
 
     if (state_is_up && (raycaster->rays_nb * shift) <= 720) {
         raycaster->rays_nb *= shift;
-        raycaster->ray_shift /= shift;
+        raycaster->ray_shift /= (float)shift;
     }
     if (!state_is_up && (raycaster->rays_nb / shift) >= 45) {
         raycaster->rays_nb /= shift;
-        raycaster->ray_shift *= shift;
+        raycaster->ray_shift *= (float)shift;
     }
-
 }
 
 void change_resolution(raycaster_t *raycaster)

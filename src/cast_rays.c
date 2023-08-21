@@ -8,14 +8,14 @@ static void get_vertical_ray_pos(sfVector2f *ray_pos, float ray_angle, raycaster
 
     raycaster->tries = 0;
     if (cosf(deg_to_rad(ray_angle)) > 0.001) {
-        ray_pos->x = (((int)raycaster->player->pos.x >> raycaster->power_2.y) << raycaster->power_2.y) + raycaster->block_size.y; // 64
+        ray_pos->x = (float)(((int)raycaster->player->pos.x >> raycaster->power_2.y) << raycaster->power_2.y) + raycaster->block_size.y;
         ray_pos->y = (raycaster->player->pos.x - ray_pos->x) * tan_value + raycaster->player->pos.y;
-        next->x = raycaster->block_size.y; // 64
+        next->x = raycaster->block_size.y;
         next->y = -next->x * tan_value;
     } else if (cosf(deg_to_rad(ray_angle)) < -0.001) {
-        ray_pos->x = (((int)raycaster->player->pos.x >> raycaster->power_2.y) << raycaster->power_2.y) - 0.0001;
+        ray_pos->x = (float)(((int)raycaster->player->pos.x >> raycaster->power_2.y) << raycaster->power_2.y) - 0.0001f;
         ray_pos->y = (raycaster->player->pos.x - ray_pos->x) * tan_value + raycaster->player->pos.y;
-        next->x = -raycaster->block_size.y; // 64
+        next->x = -raycaster->block_size.y;
         next->y = -next->x * tan_value;
     } else {
         *ray_pos = raycaster->player->pos;
@@ -29,14 +29,14 @@ static void get_horizontal_ray_pos(sfVector2f *ray_pos, float ray_angle, raycast
 
     raycaster->tries = 0;
     if (sinf(deg_to_rad(ray_angle)) > 0.001) {
-        ray_pos->y = (((int)raycaster->player->pos.y >> raycaster->power_2.x) << raycaster->power_2.x) - 0.0001;
+        ray_pos->y = (float)(((int)raycaster->player->pos.y >> raycaster->power_2.x) << raycaster->power_2.x) - 0.0001f;
         ray_pos->x = (raycaster->player->pos.y - ray_pos->y) * tan_value + raycaster->player->pos.x;
-        next->y = -raycaster->block_size.x; // 64
+        next->y = -raycaster->block_size.x;
         next->x = -next->y * tan_value;
     } else if (sinf(deg_to_rad(ray_angle)) < -0.001) {
-        ray_pos->y = (((int)raycaster->player->pos.y >> raycaster->power_2.x) << raycaster->power_2.x) + raycaster->block_size.x; // 64
+        ray_pos->y = (float)(((int)raycaster->player->pos.y >> raycaster->power_2.x) << raycaster->power_2.x) + raycaster->block_size.x;
         ray_pos->x = (raycaster->player->pos.y - ray_pos->y) * tan_value + raycaster->player->pos.x;
-        next->y = raycaster->block_size.x; // 64
+        next->y = raycaster->block_size.x;
         next->x = -next->y * tan_value;
     } else {
         *ray_pos = raycaster->player->pos;

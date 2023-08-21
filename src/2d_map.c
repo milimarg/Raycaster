@@ -13,8 +13,8 @@ void create_2d_map(raycaster_t *raycaster)
     for (unsigned int i = 0; i < raycaster->map_size.y; i++) {
         for (unsigned int j = 0; j < raycaster->map_size.x; j++) {
             raycaster->blocks_2d[k] = sfRectangleShape_create();
-            pos.x = (j * raycaster->map_surface) / (raycaster->map_surface / raycaster->block_size.x);
-            pos.y = (i * raycaster->map_surface) / (raycaster->map_surface / raycaster->block_size.y);
+            pos.x = (float)(j * raycaster->map_surface) / ((float)raycaster->map_surface / raycaster->block_size.x);
+            pos.y = (float)(i * raycaster->map_surface) / ((float)raycaster->map_surface / raycaster->block_size.y);
             sfRectangleShape_setPosition(raycaster->blocks_2d[k], pos);
             sfRectangleShape_setSize(raycaster->blocks_2d[k], raycaster->block_size);
             sfRectangleShape_setFillColor(raycaster->blocks_2d[k], colors[map[k]]);
@@ -32,5 +32,4 @@ void display_2d_map(raycaster_t *raycaster, sfRenderWindow *window)
     }
     sfRenderWindow_drawVertexArray(window, raycaster->rays_2d, NULL);
     sfRenderWindow_drawRectangleShape(window, raycaster->player->object, NULL);
-    //sfRenderWindow_drawRectangleShape(window, raycaster->player->stick_object, NULL);
 }

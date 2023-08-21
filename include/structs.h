@@ -28,7 +28,6 @@ static const int map[256] = {
         sfVector2f delta;
         float angle;
         sfRectangleShape *object;
-        sfRectangleShape *stick_object;
     } player_t;
 
     typedef struct raycaster_s {
