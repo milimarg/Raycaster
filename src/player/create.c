@@ -33,7 +33,6 @@ void create_player(raycaster_t *raycaster)
     raycaster->player = malloc(sizeof(player_t));
     raycaster->player->pos = (sfVector2f){100, 100};
     raycaster->player->angle = 0;
-    raycaster->player->move_offset = 1;
     raycaster->rays_2d = sfVertexArray_create();
     init_player_object(raycaster->player, &raycaster->block_size);
     init_player_stick_object(raycaster->player, &raycaster->block_size);

@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2023
-** MyRaycaster
-** File description:
-** 3d_map.c
-*/
-
 #include "../include/structs.h"
 #include "../include/prototypes.h"
 

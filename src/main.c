@@ -6,28 +6,28 @@
 
 static int round_float(float n)
 {
-    return ((n < 0) ? (n - 0.5) : (n + 0.5));
+    return ((int)((n < 0) ? (n - 0.5) : (n + 0.5)));
 }
 
 static void set_power_2(raycaster_t *raycaster)
 {
-    double power_2_x = log2(raycaster->block_size.x);
-    double power_2_y = log2(raycaster->block_size.y);
+    float power_2_x = log2f(raycaster->block_size.x);
+    float power_2_y = log2f(raycaster->block_size.y);
 
-    if (ceil(power_2_x) != power_2_x)
-        power_2_x = round_float(power_2_x);
-    if (ceil(power_2_y) != power_2_y)
-        power_2_y = round_float(power_2_y);
-    raycaster->block_size = (sfVector2f){pow(2, power_2_x), pow(2, power_2_y)};
-    raycaster->power_2 = (sfVector2u){power_2_x, power_2_y};
+    if (ceilf(power_2_x) != power_2_x)
+        power_2_x = (float)round_float(power_2_x);
+    if (ceilf(power_2_y) != power_2_y)
+        power_2_y = (float)round_float(power_2_y);
+    raycaster->block_size = (sfVector2f){powf(2, power_2_x), powf(2, power_2_y)};
+    raycaster->power_2 = (sfVector2u){(unsigned int)power_2_x, (unsigned int)power_2_y};
 }
 
 int main(void)
 {
     sfEvent event = {0};
-    raycaster_t *raycaster = create_raycaster(&(sfVideoMode){1920, 1080, 32});
-    sfRenderWindow *window = sfRenderWindow_create(raycaster->mode,
-    "MyRaycaster", sfDefaultStyle, NULL);
+    sfVideoMode mode = sfVideoMode_getDesktopMode();
+    raycaster_t *raycaster = create_raycaster(&mode);
+    sfRenderWindow *window = sfRenderWindow_create(raycaster->mode, "Raycaster", sfDefaultStyle, NULL);
     sfClock *clock = sfClock_create();
 
     sfRenderWindow_setFramerateLimit(window, 60);
@@ -35,13 +35,14 @@ int main(void)
     raycaster->rays_nb = 720;
     raycaster->tries = 0;
     raycaster->max_tries = raycaster->map_size;
-    raycaster->wall_size.x = (double)raycaster->mode.width / (double)raycaster->rays_nb;
+    raycaster->wall_size.x = (float)raycaster->mode.width / (double)raycaster->rays_nb;
     raycaster->wall_size.y = raycaster->mode.height;
     while (sfRenderWindow_isOpen(window)) {
         sfRenderWindow_clear(window, sfBlack);
         if (sfClock_getElapsedTime(clock).microseconds > (50 * 1000)) {
             move_2d_player(raycaster);
             cast_rays(raycaster);
+             // detect key to toggle controls
             sfClock_restart(clock);
         }
         while (sfRenderWindow_pollEvent(window, &event)) {

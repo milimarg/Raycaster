@@ -1,33 +1,14 @@
-#include <stdio.h>
 #include <math.h>
 #include "../../include/structs.h"
 #include "../../include/prototypes.h"
 
-static void move(player_t *player, const sfVector2f *delta)
+static void handle_tank_controls(raycaster_t *raycaster, const float angle)
 {
-    player->pos.x += delta->x * 5;
-    player->pos.y += delta->y * 5;
-    sfRectangleShape_setPosition(player->object, player->pos);
-    sfRectangleShape_setPosition(player->stick_object, player->pos);
-}
-
-static void turn(player_t *player, float angle)
-{
-    player->angle = fix_angle(player->angle + angle);
-    player->delta.x = cos(deg_to_rad(player->angle));
-    player->delta.y = sin(deg_to_rad(player->angle));
-    sfRectangleShape_setRotation(player->stick_object, player->angle * (M_PI * 20));
-}
-
-void move_2d_player(raycaster_t *raycaster)
-{
-    const sfKeyCode keys[] = {sfKeyUp, sfKeyDown, -1};
-    const sfKeyCode turn_keys[] = {sfKeyLeft, sfKeyRight, -1};
-    float angle = 5;
+    static const sfKeyCode keys[] = {sfKeyUp, sfKeyDown, -1};
+    static const sfKeyCode turn_keys[] = {sfKeyLeft, sfKeyRight, -1};
     sfVector2f move_delta = {0};
+    float move_angle = 0;
 
-    raycaster->player->delta.x = cos(deg_to_rad(raycaster->player->angle));
-    raycaster->player->delta.y = sin(deg_to_rad(raycaster->player->angle));
     for (int i = 0; keys[i] != -1; i++) {
         move_delta = raycaster->player->delta;
         if (sfKeyboard_isKeyPressed(keys[i])) {
@@ -35,12 +16,22 @@ void move_2d_player(raycaster_t *raycaster)
                 move_delta.x *= -1;
                 move_delta.y *= -1;
             }
-            move(raycaster->player, &move_delta);
+            controls_move(raycaster->player, &move_delta);
         }
     }
     for (int i = 0; turn_keys[i] != -1; i++) {
         if (sfKeyboard_isKeyPressed(turn_keys[i])) {
-            turn(raycaster->player, (turn_keys[i] == sfKeyLeft) ? -angle : angle);
+            move_angle = (turn_keys[i] == sfKeyLeft) ? -angle : angle;
+            tank_controls_turn(raycaster->player, move_angle);
         }
     }
+}
+
+void move_2d_player(raycaster_t *raycaster)
+{
+    static const float angle = 5;
+
+    raycaster->player->delta.x = cosf(deg_to_rad(raycaster->player->angle));
+    raycaster->player->delta.y = sinf(deg_to_rad(raycaster->player->angle));
+    handle_tank_controls(raycaster, angle);
 }

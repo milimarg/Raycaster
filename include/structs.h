@@ -26,8 +26,7 @@ static const int map[256] = {
     typedef struct player_s {
         sfVector2f pos;
         sfVector2f delta;
-        double angle;
-        double move_offset;
+        float angle;
         sfRectangleShape *object;
         sfRectangleShape *stick_object;
     } player_t;

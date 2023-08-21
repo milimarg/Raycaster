@@ -1,6 +1,7 @@
 SRC	=	src/main.c \
 		src/player/create.c \
 		src/player/move.c \
+		src/player/controls_move.c \
 		src/2d_map.c \
 		src/raycaster.c \
 		src/cast_rays.c \
@@ -9,7 +10,7 @@ SRC	=	src/main.c \
 
 OBJ	=	$(SRC:.c=.o)
 
-NAME	=	my_raycaster
+NAME	=	raycaster
 
 CFLAGS	=	-Wall -Wextra
 

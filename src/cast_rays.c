@@ -1,28 +1,18 @@
-/*
-** EPITECH PROJECT, 2023
-** MyRayCaster
-** File description:
-** cast_rays.c
-*/
-
 #include <math.h>
 #include "../include/structs.h"
 #include "../include/prototypes.h"
 
-#define P2 M_PI / 2
-#define P3 3 * M_PI / 2
-
 static void get_vertical_ray_pos(sfVector2f *ray_pos, float ray_angle, raycaster_t *raycaster, sfVector2f *next)
 {
-    float tan_value = tan(deg_to_rad(ray_angle));
+    float tan_value = tanf(deg_to_rad(ray_angle));
 
     raycaster->tries = 0;
-    if (cos(deg_to_rad(ray_angle)) > 0.001) {
+    if (cosf(deg_to_rad(ray_angle)) > 0.001) {
         ray_pos->x = (((int)raycaster->player->pos.x >> raycaster->power_2.y) << raycaster->power_2.y) + raycaster->block_size.y; // 64
         ray_pos->y = (raycaster->player->pos.x - ray_pos->x) * tan_value + raycaster->player->pos.y;
         next->x = raycaster->block_size.y; // 64
         next->y = -next->x * tan_value;
-    } else if (cos(deg_to_rad(ray_angle)) < -0.001) {
+    } else if (cosf(deg_to_rad(ray_angle)) < -0.001) {
         ray_pos->x = (((int)raycaster->player->pos.x >> raycaster->power_2.y) << raycaster->power_2.y) - 0.0001;
         ray_pos->y = (raycaster->player->pos.x - ray_pos->x) * tan_value + raycaster->player->pos.y;
         next->x = -raycaster->block_size.y; // 64
@@ -35,15 +25,15 @@ static void get_vertical_ray_pos(sfVector2f *ray_pos, float ray_angle, raycaster
 
 static void get_horizontal_ray_pos(sfVector2f *ray_pos, float ray_angle, raycaster_t *raycaster, sfVector2f *next)
 {
-    float tan_value = 1.0 / tan(deg_to_rad(ray_angle));
+    float tan_value = 1.0f / tanf(deg_to_rad(ray_angle));
 
     raycaster->tries = 0;
-    if (sin(deg_to_rad(ray_angle)) > 0.001) {
+    if (sinf(deg_to_rad(ray_angle)) > 0.001) {
         ray_pos->y = (((int)raycaster->player->pos.y >> raycaster->power_2.x) << raycaster->power_2.x) - 0.0001;
         ray_pos->x = (raycaster->player->pos.y - ray_pos->y) * tan_value + raycaster->player->pos.x;
         next->y = -raycaster->block_size.x; // 64
         next->x = -next->y * tan_value;
-    } else if (sin(deg_to_rad(ray_angle)) < -0.001) {
+    } else if (sinf(deg_to_rad(ray_angle)) < -0.001) {
         ray_pos->y = (((int)raycaster->player->pos.y >> raycaster->power_2.x) << raycaster->power_2.x) + raycaster->block_size.x; // 64
         ray_pos->x = (raycaster->player->pos.y - ray_pos->y) * tan_value + raycaster->player->pos.x;
         next->y = raycaster->block_size.x; // 64
@@ -133,7 +123,7 @@ void cast_rays(raycaster_t *raycaster)
     sfVector2f h_pos = {0};
     sfVector2f v_pos = {0};
     sfVector2f ray_pos = {0};
-    float ray_dist = 0.01;
+    float ray_dist = 0.01f;
     float ray_angle = (raycaster->player->angle - ((double)raycaster->rays_nb / 2.0) * ray_dist);
     float shortest_distance = 0;
     sfColor color = {0};
@@ -152,7 +142,7 @@ void cast_rays(raycaster_t *raycaster)
         vertex.position = ray_pos;
         vertex.color = sfGreen;
         sfVertexArray_append(raycaster->rays_2d, vertex);
-        ray_angle += 0.125;
+        ray_angle += 0.125f;
         shortest_distance = (h_distance < v_distance) ? h_distance : v_distance;
         color = (h_distance < v_distance) ? sfGreen : sfRed;
         create_3d_wall(shortest_distance, i, raycaster, &color);

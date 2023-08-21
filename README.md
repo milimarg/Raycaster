@@ -9,7 +9,7 @@ make
 ## Usage
 
 ```shell
-./my_raycaster
+./raycaster
 ```
 
 ## Controls
