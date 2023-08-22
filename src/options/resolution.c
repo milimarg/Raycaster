@@ -1,4 +1,4 @@
-#include "../include/prototypes.h"
+#include "../../include/prototypes.h"
 
 void increase_resolution(raycaster_t *raycaster)
 {
