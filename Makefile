@@ -1,13 +1,17 @@
-SRC	=	src/main.c \
-		src/player/create.c \
+SRC	=	src/player/create.c \
 		src/player/move.c \
 		src/player/controls_move.c \
-		src/2d_map.c \
+		src/map/2d_map.c \
+		src/map/3d_map.c \
+		src/math/math_tools.c \
+		src/math/angle.c \
+		src/options/mouse_view.c \
+		src/options/pause.c \
+		src/main.c \
 		src/raycaster.c \
 		src/cast_rays.c \
-		src/math_tools.c \
-		src/3d_map.c \
-		src/resolution.c
+		src/resolution.c \
+		src/update.c
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -17,7 +21,7 @@ CFLAGS	=	-Wall -Wextra
 
 # add this in CSFML_FLAGS for mac "-L/opt/homebrew/Cellar/csfml/2.5.2_1/lib"
 
-CSFML_FLAGS	=	-lcsfml-graphics -lcsfml-system -lcsfml-window
+CSFML_FLAGS	=	-L/opt/homebrew/Cellar/csfml/2.5.2_1/lib -lcsfml-graphics -lcsfml-system -lcsfml-window
 
 all: $(NAME)
 

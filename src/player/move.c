@@ -1,5 +1,4 @@
 #include <math.h>
-#include "../../include/structs.h"
 #include "../../include/prototypes.h"
 
 static void handle_tank_controls(raycaster_t *raycaster, const float angle)
@@ -27,25 +26,11 @@ static void handle_tank_controls(raycaster_t *raycaster, const float angle)
     }
 }
 
-static void move_view_with_mouse(sfRenderWindow *window, raycaster_t *raycaster, const float angle)
-{
-    static sfVector2i prev = {0};
-    sfVector2i current = sfMouse_getPositionRenderWindow(window);
-    sfVector2i delta = {current.x - prev.x, current.y - prev.y};
-    float move_angle = (delta.x < 0) ? -angle : angle;
-
-    if (fabsf((float)delta.x) > 10 && fabsf((float)delta.y) < 8) {
-        tank_controls_turn(raycaster->player, move_angle * 2);
-    }
-    prev = current;
-}
-
-void move_2d_player(raycaster_t *raycaster, sfRenderWindow *window)
+void move_2d_player(raycaster_t *raycaster)
 {
     static const float angle = 5;
 
     raycaster->player->delta.x = cosf(deg_to_rad(raycaster->player->angle));
     raycaster->player->delta.y = sinf(deg_to_rad(raycaster->player->angle));
     handle_tank_controls(raycaster, angle);
-    move_view_with_mouse(window, raycaster, angle);
 }

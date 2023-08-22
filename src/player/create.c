@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include "../../include/structs.h"
 #include "../../include/prototypes.h"
 
 static void init_player_object(player_t *player, sfVector2f *block_size)

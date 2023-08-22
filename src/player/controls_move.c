@@ -1,5 +1,4 @@
 #include <math.h>
-#include "../../include/structs.h"
 #include "../../include/prototypes.h"
 
 void controls_move(player_t *player, const sfVector2f *delta)

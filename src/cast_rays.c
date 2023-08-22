@@ -1,5 +1,4 @@
 #include <math.h>
-#include "../include/structs.h"
 #include "../include/prototypes.h"
 
 static void get_vertical_ray_pos(sfVector2f *ray_pos, float ray_angle, raycaster_t *raycaster, sfVector2f *next)
@@ -98,19 +97,19 @@ static void create_3d_wall(float distance, unsigned int i, raycaster_t *raycaste
     float height = (float)(raycaster->map_surface * 540) / fabsf(distance);
 
     vertex.color = *color;
-    vertex.position.x = raycaster->wall_size.x * (float)i;
+    vertex.position.x = raycaster->render_specs.wall_size.x * (float)i;
     vertex.position.y = ((float)raycaster->window_size.y / 2.0f) - (height / 2.0f);
     sfVertexArray_append(raycaster->walls_3d, vertex);
     vertex.color = *color;
-    vertex.position.x = (raycaster->wall_size.x * (float)i) + raycaster->wall_size.x;
+    vertex.position.x = (raycaster->render_specs.wall_size.x * (float)i) + raycaster->render_specs.wall_size.x;
     vertex.position.y = ((float)raycaster->window_size.y / 2.0f) - (height / 2.0f);
     sfVertexArray_append(raycaster->walls_3d, vertex);
     vertex.color = *color;
-    vertex.position.x = (raycaster->wall_size.x * (float)i) + raycaster->wall_size.x;
+    vertex.position.x = (raycaster->render_specs.wall_size.x * (float)i) + raycaster->render_specs.wall_size.x;
     vertex.position.y = ((float)raycaster->window_size.y / 2.0f) + (height / 2.0f);
     sfVertexArray_append(raycaster->walls_3d, vertex);
     vertex.color = *color;
-    vertex.position.x = (raycaster->wall_size.x * (float)i);
+    vertex.position.x = (raycaster->render_specs.wall_size.x * (float)i);
     vertex.position.y = ((float)raycaster->window_size.y / 2.0f) + (height / 2.0f);
     sfVertexArray_append(raycaster->walls_3d, vertex);
 }
@@ -127,6 +126,7 @@ void cast_rays(raycaster_t *raycaster)
     float ray_angle = (raycaster->player->angle - ((float)raycaster->rays_nb / 2.0f) * ray_dist);
     float shortest_distance = 0;
     sfColor color = {0};
+    const sfColor colors[] = {raycaster->render_specs.primary, raycaster->render_specs.second};
 
     sfVertexArray_clear(raycaster->rays_2d);
     sfVertexArray_setPrimitiveType(raycaster->rays_2d, sfLines);
@@ -137,14 +137,14 @@ void cast_rays(raycaster_t *raycaster)
         v_distance = check_vertical_line(raycaster, &v_pos, ray_angle);
         ray_pos = (h_distance < v_distance) ? h_pos : v_pos;
         vertex.position = raycaster->player->pos;
-        vertex.color = sfGreen;
+        vertex.color = colors[0];
         sfVertexArray_append(raycaster->rays_2d, vertex);
         vertex.position = ray_pos;
-        vertex.color = sfGreen;
+        vertex.color = colors[0];
         sfVertexArray_append(raycaster->rays_2d, vertex);
         ray_angle += raycaster->ray_shift;
         shortest_distance = (h_distance < v_distance) ? h_distance : v_distance;
-        color = (h_distance < v_distance) ? sfGreen : sfRed;
+        color = colors[(h_distance < v_distance)];
         create_3d_wall(shortest_distance, i, raycaster, &color);
     }
 }

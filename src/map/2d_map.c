@@ -1,6 +1,5 @@
 #include <stdlib.h>
-#include "../include/structs.h"
-#include "../include/prototypes.h"
+#include "../../include/prototypes.h"
 
 void create_2d_map(raycaster_t *raycaster)
 {
