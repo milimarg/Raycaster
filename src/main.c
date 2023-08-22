@@ -5,14 +5,11 @@ int main(void)
 {
     sfEvent event = {0};
     sfVideoMode mode = sfVideoMode_getDesktopMode();
-    mode.width = 1920;
-    mode.height = 1080;
     sfRenderWindow *window = sfRenderWindow_create(mode, "Raycaster", sfDefaultStyle, NULL);
     raycaster_t *raycaster = create_raycaster(window);
     sfClock *clock = sfClock_create();
 
     sfRenderWindow_setFramerateLimit(window, 60);
-    //sfRenderWindow_setMouseCursorVisible(window, sfFalse);
     while (sfRenderWindow_isOpen(window)) {
         sfRenderWindow_clear(window, sfBlack);
         if (sfClock_getElapsedTime(clock).microseconds > (62 * 1000)) {

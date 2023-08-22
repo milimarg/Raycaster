@@ -27,7 +27,6 @@ static void set_power_2(raycaster_t *raycaster)
 raycaster_t *create_raycaster(sfRenderWindow *window)
 {
     raycaster_t *raycaster = malloc(sizeof(raycaster_t));
-    sfVector2i center = {0};
 
     raycaster->window_size = sfRenderWindow_getSize(window);
     raycaster->map_size = (sfVector2u){16, 16};
@@ -40,12 +39,5 @@ raycaster_t *create_raycaster(sfRenderWindow *window)
     raycaster->walls_3d = sfVertexArray_create();
     create_player(raycaster);
     set_power_2(raycaster);
-
-    center.x = (int)((float)raycaster->window_size.x / 2.0f);
-    center.y = (int)((float)raycaster->window_size.y / 2.0f);
-    printf("size => x = %d & y = %d\n", raycaster->window_size.x, raycaster->window_size.y);
-    printf("center => x = %d & y = %d\n", center.x, center.y);
-    sfMouse_setPositionRenderWindow(center, window);
-
     return (raycaster);
 }
