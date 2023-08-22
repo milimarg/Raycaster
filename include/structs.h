@@ -63,7 +63,6 @@ static const int map[256] = {
         float ray_shift;
         options_t options;
         render_specs_t render_specs;
-
     } raycaster_t;
 
 #endif /*STRUCTS_H_*/

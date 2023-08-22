@@ -39,7 +39,6 @@ void increase_resolution(raycaster_t *raycaster);
 void decrease_resolution(raycaster_t *raycaster);
 void mouse_view(sfRenderWindow *window, raycaster_t *raycaster);
 void toggle_mouse_view(raycaster_t *raycaster);
-void pause(raycaster_t *raycaster);
 void toggle_pause(raycaster_t *raycaster);
 
 #endif /*PROTOTYPES_H_*/
