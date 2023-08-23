@@ -1,5 +1,5 @@
 #include <math.h>
-#include "../include/prototypes.h"
+#include "../../include/prototypes.h"
 
 static void get_vertical_ray_pos(sfVector2f *ray_pos, float ray_angle, raycaster_t *raycaster, sfVector2f *next)
 {
@@ -7,12 +7,12 @@ static void get_vertical_ray_pos(sfVector2f *ray_pos, float ray_angle, raycaster
 
     raycaster->tries = 0;
     if (cosf(deg_to_rad(ray_angle)) > 0.001) {
-        ray_pos->x = (float)(((int)raycaster->player->pos.x >> raycaster->power_2.y) << raycaster->power_2.y) + raycaster->block_size.y;
+        ray_pos->x = average_bitshift(raycaster->power_2.y, raycaster->block_size.y) + raycaster->block_size.y;
         ray_pos->y = (raycaster->player->pos.x - ray_pos->x) * tan_value + raycaster->player->pos.y;
         next->x = raycaster->block_size.y;
         next->y = -next->x * tan_value;
     } else if (cosf(deg_to_rad(ray_angle)) < -0.001) {
-        ray_pos->x = (float)(((int)raycaster->player->pos.x >> raycaster->power_2.y) << raycaster->power_2.y) - 0.0001f;
+        ray_pos->x = average_bitshift(raycaster->power_2.y, raycaster->block_size.x) - 0.0001f;
         ray_pos->y = (raycaster->player->pos.x - ray_pos->x) * tan_value + raycaster->player->pos.y;
         next->x = -raycaster->block_size.y;
         next->y = -next->x * tan_value;
@@ -28,12 +28,12 @@ static void get_horizontal_ray_pos(sfVector2f *ray_pos, float ray_angle, raycast
 
     raycaster->tries = 0;
     if (sinf(deg_to_rad(ray_angle)) > 0.001) {
-        ray_pos->y = (float)(((int)raycaster->player->pos.y >> raycaster->power_2.x) << raycaster->power_2.x) - 0.0001f;
+        ray_pos->y = average_bitshift(raycaster->power_2.x, raycaster->player->pos.y) - 0.0001f;
         ray_pos->x = (raycaster->player->pos.y - ray_pos->y) * tan_value + raycaster->player->pos.x;
         next->y = -raycaster->block_size.x;
         next->x = -next->y * tan_value;
     } else if (sinf(deg_to_rad(ray_angle)) < -0.001) {
-        ray_pos->y = (float)(((int)raycaster->player->pos.y >> raycaster->power_2.x) << raycaster->power_2.x) + raycaster->block_size.x;
+        ray_pos->y = average_bitshift(raycaster->power_2.x, raycaster->player->pos.y) + raycaster->block_size.x;
         ray_pos->x = (raycaster->player->pos.y - ray_pos->y) * tan_value + raycaster->player->pos.x;
         next->y = raycaster->block_size.x;
         next->x = -next->y * tan_value;
@@ -121,30 +121,25 @@ void cast_rays(raycaster_t *raycaster)
     sfVertex vertex = {0};
     sfVector2f h_pos = {0};
     sfVector2f v_pos = {0};
-    sfVector2f ray_pos = {0};
     float ray_dist = 0.01f;
-    float ray_angle = (raycaster->player->angle - ((float)raycaster->rays_nb / 2.0f) * ray_dist);
+    float ray_angle = (raycaster->player->angle - ((float)raycaster->rays_number / 2.0f) * ray_dist);
     float shortest_distance = 0;
     sfColor color = {0};
-    const sfColor colors[] = {raycaster->render_specs.primary, raycaster->render_specs.second};
 
     sfVertexArray_clear(raycaster->rays_2d);
-    sfVertexArray_setPrimitiveType(raycaster->rays_2d, sfLines);
     sfVertexArray_clear(raycaster->walls_3d);
-    sfVertexArray_setPrimitiveType(raycaster->walls_3d, sfQuads);
-    for (unsigned int i = 0; i < raycaster->rays_nb; i++) {
+    for (unsigned int i = 0; i < raycaster->rays_number; i++) {
         h_distance = check_horizontal_line(raycaster, &h_pos, ray_angle);
         v_distance = check_vertical_line(raycaster, &v_pos, ray_angle);
-        ray_pos = (h_distance < v_distance) ? h_pos : v_pos;
         vertex.position = raycaster->player->pos;
-        vertex.color = colors[0];
+        vertex.color = raycaster->render_specs.wall_colors[2];
         sfVertexArray_append(raycaster->rays_2d, vertex);
-        vertex.position = ray_pos;
-        vertex.color = colors[0];
+        vertex.position = (h_distance < v_distance) ? h_pos : v_pos;
+        vertex.color = raycaster->render_specs.wall_colors[2];
         sfVertexArray_append(raycaster->rays_2d, vertex);
         ray_angle += raycaster->ray_shift;
         shortest_distance = (h_distance < v_distance) ? h_distance : v_distance;
-        color = colors[(h_distance < v_distance)];
+        color = raycaster->render_specs.wall_colors[(h_distance < v_distance)];
         create_3d_wall(shortest_distance, i, raycaster, &color);
     }
 }

@@ -1,10 +1,14 @@
 #ifndef PROTOTYPES_H_
 	#define PROTOTYPES_H_
+    #include <SFML/Graphics.h>
+    #include <SFML/System.h>
+    #include <SFML/Window.h>
     #include "structs.h"
 
 // CREATE //
 
-raycaster_t *create_raycaster(sfRenderWindow *window, sfColor colors[2], sfVector2u map_size);
+raycaster_t *create_raycaster(sfRenderWindow *window, sfColor wall_colors[3],
+sfVector2u map_size, sfColor map_colors[2]);
 void create_2d_map(raycaster_t *raycaster);
 void create_player(raycaster_t *raycaster);
 
@@ -12,7 +16,7 @@ void create_player(raycaster_t *raycaster);
 
 void move_2d_player(raycaster_t *raycaster);
 void controls_move(player_t *player, const sfVector2f *delta);
-void tank_controls_turn(player_t *player, float angle);
+void controls_turn(player_t *player, float angle);
 void update(raycaster_t *raycaster, sfRenderWindow *window);
 
 // DISPLAY //
@@ -23,7 +27,8 @@ void display_3d_map(raycaster_t *raycaster, sfRenderWindow *window);
 // RAYS //
 
 void cast_rays(raycaster_t *raycaster);
-void update_3d_wall_size(raycaster_t *raycaster);
+void update_3d_wall_size(render_specs_t *render, sfVector2u *window_size,
+unsigned int rays_number);
 
 // MATH TOOLS //
 
@@ -32,6 +37,7 @@ float calc_distance(sfVector2f *player, sfVector2f *ray, float ray_angle);
 float fix_angle(float angle);
 int round_float(float n);
 void invert_variable(int *a);
+float average_bitshift(unsigned int power_2, float value);
 
 // OPTIONS
 

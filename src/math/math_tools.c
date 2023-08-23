@@ -19,3 +19,8 @@ void invert_variable(int *a)
 {
     *a = !*a;
 }
+
+float average_bitshift(unsigned int power_2, float value)
+{
+    return (float)(((int)value >> power_2) << power_2);
+}

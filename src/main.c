@@ -1,13 +1,16 @@
 #include "../include/prototypes.h"
 
+// map_size and block_size must be a power_2
+
 int main(void)
 {
     sfEvent event = {0};
-    sfColor colors[] = {sfWhite, sfBlue};
+    sfColor wall_colors[] = {sfWhite, sfBlue, sfYellow};
+    sfColor map_colors[] = {sfBlack, sfWhite};
     sfVector2u map_size = {16, 16};
     sfVideoMode mode = sfVideoMode_getDesktopMode();
     sfRenderWindow *window = sfRenderWindow_create(mode, "Raycaster", sfDefaultStyle, NULL);
-    raycaster_t *raycaster = create_raycaster(window, colors, map_size);
+    raycaster_t *raycaster = create_raycaster(window, wall_colors, map_size, map_colors);
     sfClock *clock = sfClock_create();
 
     sfRenderWindow_setFramerateLimit(window, 60);

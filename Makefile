@@ -8,9 +8,9 @@ SRC	=	src/player/create.c \
 		src/options/mouse_view.c \
 		src/options/pause.c \
 		src/options/resolution.c \
+		src/rays/cast_rays.c \
 		src/main.c \
 		src/raycaster.c \
-		src/cast_rays.c \
 		src/update.c
 
 OBJ	=	$(SRC:.c=.o)

@@ -16,7 +16,7 @@ void mouse_view(sfRenderWindow *window, raycaster_t *raycaster)
     delta = (sfVector2i){current.x - prev.x, current.y - prev.y};
     move_angle = (delta.x < 0) ? -angle : angle;
     if (fabsf((float)delta.x) > 10 && fabsf((float)delta.y) < 8) {
-        tank_controls_turn(raycaster->player, move_angle * 2);
+        controls_turn(raycaster->player, move_angle * 2);
     }
     prev = current;
 }

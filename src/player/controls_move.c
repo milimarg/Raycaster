@@ -8,7 +8,7 @@ void controls_move(player_t *player, const sfVector2f *delta)
     sfRectangleShape_setPosition(player->object, player->pos);
 }
 
-void tank_controls_turn(player_t *player, float angle)
+void controls_turn(player_t *player, float angle)
 {
     player->angle = fix_angle(player->angle + angle);
     player->delta.x = cosf(deg_to_rad(player->angle));

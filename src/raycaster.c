@@ -13,8 +13,10 @@ static void set_power_2(raycaster_t *raycaster)
     if (ceilf(power_2_y) != power_2_y) {
         power_2_y = (float)round_float(power_2_y);
     }
-    raycaster->block_size = (sfVector2f){powf(2, power_2_x), powf(2, power_2_y)};
-    raycaster->power_2 = (sfVector2u){(unsigned int)power_2_x, (unsigned int)power_2_y};
+    raycaster->block_size.x = powf(2, power_2_x);
+    raycaster->block_size.y = powf(2, power_2_y);
+    raycaster->power_2.x = (unsigned int)power_2_x;
+    raycaster->power_2.y = (unsigned int)power_2_y;
 }
 
 static void set_display_options(options_t *display)
@@ -26,20 +28,34 @@ static void set_display_options(options_t *display)
     }
 }
 
-raycaster_t *create_raycaster(sfRenderWindow *window, sfColor colors[2], sfVector2u map_size)
+static void set_values(raycaster_t *raycaster, sfRenderWindow *window,
+sfVector2u map_size)
 {
-    raycaster_t *raycaster = malloc(sizeof(raycaster_t));
-
     raycaster->window_size = sfRenderWindow_getSize(window);
     raycaster->map_size = map_size;
     raycaster->map_surface = raycaster->map_size.x * raycaster->map_size.y;
-    raycaster->rays_nb = 720;
+    raycaster->rays_number = 720;
     raycaster->tries = 0;
     raycaster->max_tries = raycaster->map_size;
     raycaster->walls_3d = sfVertexArray_create();
-    raycaster->render_specs.primary = colors[0];
-    raycaster->render_specs.second = colors[1];
-    update_3d_wall_size(raycaster);
+    sfVertexArray_setPrimitiveType(raycaster->walls_3d, sfQuads);
+}
+
+raycaster_t *create_raycaster(sfRenderWindow *window, sfColor wall_colors[3],
+sfVector2u map_size, sfColor map_colors[2])
+{
+    raycaster_t *raycaster = malloc(sizeof(raycaster_t));
+
+    set_values(raycaster, window, map_size);
+    raycaster->render_specs.wall_colors = malloc(sizeof(sfColor) * 3);
+    raycaster->render_specs.map_colors = malloc(sizeof(sfColor) * 2);
+    for (int i = 0; i < 2; i++) {
+        raycaster->render_specs.wall_colors[i] = wall_colors[i];
+        raycaster->render_specs.map_colors[i] = map_colors[i];
+    }
+    raycaster->render_specs.wall_colors[2] = wall_colors[2];
+    update_3d_wall_size(&raycaster->render_specs, &raycaster->window_size,
+    raycaster->rays_number);
     create_2d_map(raycaster);
     create_player(raycaster);
     set_power_2(raycaster);
