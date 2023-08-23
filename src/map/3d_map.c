@@ -9,5 +9,5 @@ unsigned int rays_number)
 
 void display_3d_map(raycaster_t *raycaster, sfRenderWindow *window)
 {
-    sfRenderWindow_drawVertexArray(window, raycaster->walls_3d, NULL);
+    sfRenderWindow_drawVertexArray(window, raycaster->rays->walls_3d, NULL);
 }

@@ -29,7 +29,7 @@ void update(raycaster_t *raycaster, sfRenderWindow *window)
     if (anti_spam && !sfKeyboard_isKeyPressed(sfKeyP)) {
         anti_spam = 0;
     }
-    if (!raycaster->options.elements[PAUSE]) {
+    if (!raycaster->options->elements[PAUSE]) {
         return;
     }
     toggle_options(raycaster);

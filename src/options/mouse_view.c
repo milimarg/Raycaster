@@ -9,7 +9,7 @@ void mouse_view(sfRenderWindow *window, raycaster_t *raycaster)
     sfVector2i delta = {0};
     float move_angle;
 
-    if (!raycaster->options.elements[MOUSE_VIEW]) {
+    if (!raycaster->options->elements[MOUSE_VIEW]) {
         return;
     }
     current = sfMouse_getPositionRenderWindow(window);
@@ -23,5 +23,5 @@ void mouse_view(sfRenderWindow *window, raycaster_t *raycaster)
 
 void toggle_mouse_view(raycaster_t *raycaster)
 {
-    invert_variable(&raycaster->options.elements[MOUSE_VIEW]);
+    invert_variable(&raycaster->options->elements[MOUSE_VIEW]);
 }

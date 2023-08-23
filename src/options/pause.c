@@ -2,5 +2,5 @@
 
 void toggle_pause(raycaster_t *raycaster)
 {
-    invert_variable(&raycaster->options.elements[PAUSE]);
+    invert_variable(&raycaster->options->elements[PAUSE]);
 }

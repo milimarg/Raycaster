@@ -45,21 +45,29 @@ typedef struct {
 } render_specs_t;
 
 typedef struct {
-    sfVector2u window_size;
-    player_t *player;
-    sfVector2f block_size;
-    sfRectangleShape **blocks_2d;
-    unsigned int rays_number;
-    sfVector2u power_2;
+    unsigned int number;
     unsigned int tries;
     sfVector2u max_tries;
     sfVertexArray *rays_2d;
     sfVertexArray *walls_3d;
-    sfVector2u map_size;
-    unsigned int map_surface;
-    float ray_shift;
-    options_t options;
-    render_specs_t render_specs;
+    float shift;
+} rays_t;
+
+typedef struct {
+    sfVector2u size;
+    unsigned int surface;
+    sfRectangleShape **walls;
+} map_t;
+
+typedef struct {
+    sfVector2u window_size;
+    sfVector2f block_size;
+    sfVector2u power_2;
+    player_t *player;
+    options_t *options;
+    render_specs_t *render_specs;
+    rays_t *rays;
+    map_t *map;
 } raycaster_t;
 
 #endif /*STRUCTS_H_*/

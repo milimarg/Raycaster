@@ -19,4 +19,5 @@ make
 `Arrow Up/Down` => move forward/backward \
 `Arrow Left/Right` => turn left/right \
 `Comma (,)/Period (.)` => increase/decrease graphics quality \
-`M` => Toggle mouse view
+`M` => Toggle mouse view \
+`P` => Toggle pause mode
