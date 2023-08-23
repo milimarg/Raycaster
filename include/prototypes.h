@@ -14,10 +14,13 @@ void create_player(raycaster_t *raycaster);
 
 // MOVE //
 
-void move_2d_player(raycaster_t *raycaster);
 void controls_move(player_t *player, const sfVector2f *delta);
 void controls_turn(player_t *player, float angle);
 void update(raycaster_t *raycaster, sfRenderWindow *window);
+void move_forward(raycaster_t *raycaster);
+void move_backward(raycaster_t *raycaster);
+void turn_left(raycaster_t *raycaster);
+void turn_right(raycaster_t *raycaster);
 
 // DISPLAY //
 
