@@ -16,7 +16,7 @@ int main(void)
     sfRenderWindow_setFramerateLimit(window, 60);
     while (sfRenderWindow_isOpen(window)) {
         sfRenderWindow_clear(window, sfBlack);
-        if (sfClock_getElapsedTime(clock).microseconds > (62 * 1000)) {
+        if (sfClock_getElapsedTime(clock).microseconds > (31 * 1000)) {
             sfClock_restart(clock);
             update(raycaster, window);
         }

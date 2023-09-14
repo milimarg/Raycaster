@@ -4,7 +4,7 @@
 static void toggle_options(raycaster_t *raycaster)
 {
     static const sfKeyCode keys[] = {sfKeyUp, sfKeyDown, sfKeyLeft, sfKeyRight,
-    sfKeyComma, sfKeyPeriod, sfKeyM, sfKeyS, sfKeyA, -1};
+    sfKeyComma, sfKeyPeriod, sfKeyM, sfKeyA, sfKeyS, -1};
     static void (*functions[])(raycaster_t *) = {&move_forward, &move_backward,
     &turn_left, &turn_right, &increase_resolution, &decrease_resolution,
     &toggle_mouse_view, &increase_wall_height, &decrease_wall_height};
