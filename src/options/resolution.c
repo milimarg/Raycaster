@@ -2,9 +2,9 @@
 
 void increase_resolution(raycaster_t *raycaster)
 {
-    static const int shift = 2;
+    static const unsigned int shift = 2;
 
-    if (raycaster->rays->number * shift <= 720) {
+    if (raycaster->rays->number * shift <= MAX_RAYS) {
         raycaster->rays->number *= shift;
         raycaster->rays->shift /= (float)shift;
         update_3d_wall_size(raycaster->render_specs, &raycaster->window_size,
@@ -14,9 +14,9 @@ void increase_resolution(raycaster_t *raycaster)
 
 void decrease_resolution(raycaster_t *raycaster)
 {
-    static const int shift = 2;
+    static const unsigned int shift = 2;
 
-    if (raycaster->rays->number / shift >= 45) {
+    if (raycaster->rays->number / shift >= MIN_RAYS) {
         raycaster->rays->number /= shift;
         raycaster->rays->shift *= (float)shift;
         update_3d_wall_size(raycaster->render_specs, &raycaster->window_size,

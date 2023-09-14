@@ -94,7 +94,7 @@ static float check_vertical_line(raycaster_t *raycaster, sfVector2f *ray_pos, fl
 static void create_3d_wall(float distance, unsigned int i, raycaster_t *raycaster, sfColor color)
 {
     sfVertex vertex = {0};
-    float height = (float)(raycaster->map->surface * 540) / fabsf(distance);
+    const float height = (float)(raycaster->map->surface * raycaster->rays->wall_height_constant) / fabsf(distance);
 
     vertex.color = color;
     vertex.position.x = raycaster->render_specs->wall_size.x * (float)i;

@@ -5,6 +5,9 @@
     #include <SFML/Window.h>
     #include "structs.h"
 
+#define MIN_RAYS 45
+#define MAX_RAYS 720
+
 // CREATE //
 
 raycaster_t *create_raycaster(sfRenderWindow *window, sfColor wall_colors[3],
@@ -49,5 +52,7 @@ void decrease_resolution(raycaster_t *raycaster);
 void mouse_view(sfRenderWindow *window, raycaster_t *raycaster);
 void toggle_mouse_view(raycaster_t *raycaster);
 void toggle_pause(raycaster_t *raycaster);
+void increase_wall_height(raycaster_t *raycaster);
+void decrease_wall_height(raycaster_t *raycaster);
 
 #endif /*PROTOTYPES_H_*/

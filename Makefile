@@ -1,4 +1,5 @@
-SRC	=	src/player/create.c \
+SRC	=	example.c \
+		src/player/create.c \
 		src/player/move.c \
 		src/player/controls_move.c \
 		src/map/2d_map.c \
@@ -8,8 +9,8 @@ SRC	=	src/player/create.c \
 		src/options/mouse_view.c \
 		src/options/pause.c \
 		src/options/resolution.c \
+		src/options/wall_height.c \
 		src/rays/cast_rays.c \
-		src/main.c \
 		src/raycaster.c \
 		src/update.c
 
@@ -21,7 +22,7 @@ CFLAGS	=	-Wall -Wextra
 
 # add this in CSFML_FLAGS for mac "-L/opt/homebrew/Cellar/csfml/2.5.2_1/lib"
 
-CSFML_FLAGS	=	-lcsfml-graphics -lcsfml-system -lcsfml-window
+CSFML_FLAGS	=	-L/opt/homebrew/Cellar/csfml/2.5.2_1/lib -lcsfml-graphics -lcsfml-system -lcsfml-window
 
 all: $(NAME)
 

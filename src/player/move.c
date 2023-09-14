@@ -16,14 +16,10 @@ void move_backward(raycaster_t *raycaster)
 
 void turn_left(raycaster_t *raycaster)
 {
-    static const float angle = 5;
-
-    controls_turn(raycaster->player, -angle);
+    controls_turn(raycaster->player, -raycaster->player->turn_angle);
 }
 
 void turn_right(raycaster_t *raycaster)
 {
-    static const float angle = 5;
-
-    controls_turn(raycaster->player, angle);
+    controls_turn(raycaster->player, raycaster->player->turn_angle);
 }

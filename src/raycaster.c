@@ -24,7 +24,7 @@ static void set_display_options(options_t *display)
     display->number = OPTIONS_COUNT;
     display->elements = malloc(sizeof(int) * display->number);
     for (int i = 0; i < display->number; i++) {
-        display->elements[i] = 1;
+        display->elements[i] = 0;
     }
 }
 
@@ -39,7 +39,9 @@ sfVector2u map_size)
     raycaster->rays->number = 720;
     raycaster->rays->tries = 0;
     raycaster->rays->max_tries = raycaster->map->size;
+    raycaster->rays->shift = 0.125f;
     raycaster->rays->walls_3d = sfVertexArray_create();
+    raycaster->rays->wall_height_constant = (unsigned int)((float)raycaster->window_size.y / 2.0f);
     sfVertexArray_setPrimitiveType(raycaster->rays->walls_3d, sfQuads);
 }
 

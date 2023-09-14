@@ -4,10 +4,10 @@
 static void toggle_options(raycaster_t *raycaster)
 {
     static const sfKeyCode keys[] = {sfKeyUp, sfKeyDown, sfKeyLeft, sfKeyRight,
-    sfKeyComma, sfKeyPeriod, sfKeyM, -1};
+    sfKeyComma, sfKeyPeriod, sfKeyM, sfKeyS, sfKeyA, -1};
     static void (*functions[])(raycaster_t *) = {&move_forward, &move_backward,
     &turn_left, &turn_right, &increase_resolution, &decrease_resolution,
-    &toggle_mouse_view};
+    &toggle_mouse_view, &increase_wall_height, &decrease_wall_height};
     static int anti_spam[7] = {0};
     int skip_spam_for_move = 0;
 
@@ -34,7 +34,7 @@ void update(raycaster_t *raycaster, sfRenderWindow *window)
     if (anti_spam && !sfKeyboard_isKeyPressed(sfKeyP)) {
         anti_spam = 0;
     }
-    if (!raycaster->options->elements[PAUSE]) {
+    if (raycaster->options->elements[PAUSE]) {
         return;
     }
     raycaster->player->delta.x = cosf(deg_to_rad(raycaster->player->angle));

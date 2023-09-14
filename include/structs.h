@@ -1,7 +1,7 @@
 #ifndef STRUCTS_H_
 	#define STRUCTS_H_
 
-static const int map[256] = {
+static const int map[] = {
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
         1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
         1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -31,6 +31,7 @@ typedef struct {
     sfVector2f delta;
     float angle;
     sfRectangleShape *object;
+    float turn_angle;
 } player_t;
 
 typedef struct {
@@ -51,6 +52,7 @@ typedef struct {
     sfVertexArray *rays_2d;
     sfVertexArray *walls_3d;
     float shift;
+    unsigned int wall_height_constant;
 } rays_t;
 
 typedef struct {

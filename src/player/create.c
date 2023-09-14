@@ -19,7 +19,7 @@ void create_player(raycaster_t *raycaster)
     raycaster->player = malloc(sizeof(player_t));
     raycaster->player->pos = (sfVector2f){50, 50};
     raycaster->player->angle = 0;
-    raycaster->rays->shift = 0.125f;
+    raycaster->player->turn_angle = 5;
     raycaster->rays->rays_2d = sfVertexArray_create();
     sfVertexArray_setPrimitiveType(raycaster->rays->rays_2d, sfLines);
     init_player_object(raycaster->player, &raycaster->block_size);

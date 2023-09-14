@@ -3,18 +3,18 @@
 
 void mouse_view(sfRenderWindow *window, raycaster_t *raycaster)
 {
-    static const float angle = 5;
     static sfVector2i prev = {0};
     sfVector2i current = {0};
     sfVector2i delta = {0};
-    float move_angle;
+    float angle = raycaster->player->turn_angle;
+    float move_angle = 0;
 
     if (!raycaster->options->elements[MOUSE_VIEW]) {
         return;
     }
     current = sfMouse_getPositionRenderWindow(window);
     delta = (sfVector2i){current.x - prev.x, current.y - prev.y};
-    move_angle = (delta.x < 0) ? -angle : angle;
+    move_angle = (delta.x < 0) ? -angle: angle;
     if (fabsf((float)delta.x) > 10 && fabsf((float)delta.y) < 8) {
         controls_turn(raycaster->player, move_angle * 2);
     }

@@ -1,4 +1,4 @@
-#include "../include/prototypes.h"
+#include "include/prototypes.h"
 
 // map_size and block_size must be a power_2
 
